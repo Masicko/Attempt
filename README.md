@@ -37,8 +37,8 @@ First, let us denote a band-radius $r$ = $\frac{d-1}{2}$. We construct $L$ only 
 #### Preparation
 
 - matrix $U$ of dimensions $d$ x $d$ and copy $U = A[1:d, 1:d]$
-- arrays $l_i$ of length $r+1$ for $i \in 1 \dots r+1$
-- array $y$ of length $r + 1$
+- vectors $l_i$ of length $r+1$ for $i \in 1 \dots r+1$ (serving as "compressed" columns of $L$)
+- vector $y$ of length $r + 1$
 
 #### Main loop
 for $k$ in $1, 2, \dots n$
