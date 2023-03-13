@@ -34,12 +34,13 @@ Storing the whole $L$ would take a lot of memory. However, since we have a bande
 First, let us denote a band-radius $r$ = $\frac{d-1}{2}$. We construct $L$ only locally and we will store only $r+1$ columns (of length $r+1$) at once which yields $(r+1)^2$ memory requirements. Next, we need to store a changing values of $A$ depending on $LU$ factorization, but a window $U$ of dimensions $d$ x $d$ will be sufficient. We will proceed in the following algorithm.
 
 
-Prepare:
+#### Preparation
 
 - matrix $U$ of dimensions $d$ x $d$ and copy $U = A[1:d, 1:d]$
 - arrays $l_i$ of length $r+1$ for $i \in 1 \dots r+1$
 - array $y$ of length $r + 1$
 
+#### Main loop
 for $k$ in $1, 2, \dots n$
 - $m = \text{max}(k-r, 1)$
 - (we have $l_{m}$, $l_{m+1}, \dots l_{k-1}$ and $y[m : k-1]$ stored)
@@ -52,12 +53,13 @@ for $k$ in $1, 2, \dots n$
 - dispose $y[m]$ (if $m >= 1$) and add $y[k] = \frac{\tilde{b}[k]}{d}$
 
 
-- if $k >= r+1$ compute $x[k - r] = l_k y[k:k +r]$ (because $l_k = L^T[k, k : k + r]$)
+- if $k >= r+1$ compute $x[k - r] = l_k \cdot y[k:k +r]$ (because $l_k = L^T[k, k : k + r]$)
 
 - dispose first column and row from U and add the $k+1$-th row and column from A (this can be time consuming)
 
+#### Last entries
 Compute the remainng $x[n-r+1 : n]$ as
 
 for $i$ in $n-r+1, \dots n$
 
-- x[i] = $L^T[i, i : m] y[i : m]$ for $m = \text{min}(i +r, n)$
+- x[i] = $L^T[i, i : m] \cdot y[i : m]$ for $m = \text{min}(i +r, n)$
