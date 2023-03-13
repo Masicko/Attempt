@@ -17,11 +17,9 @@ Since A is symmetrical, we can apply symmetrical changes to the matrix such that
 \underbrace{(LAL^T)}_{D} \underbrace{(L^{-T}x)}_{y} = \underbrace{Lb}_{\tilde{b}},
 ```
 
-where $L$ is a lower triagonal matrix and $D$ is a diagonal matrix. Solving the diagonal problem and obtaing $x$ is then an easy task providing
+where $L$ is a lower triangular (banded) matrix and $D$ is a diagonal matrix. Solving the diagonal problem and obtaing $x$ is then an easy task providing
 ```math
 \begin{align}
-D y &= \tilde{b}
-\\
 \tilde{b} &= Lb
 \\
 y &= D^{-1} \tilde{b}
@@ -43,15 +41,15 @@ Prepare:
 - array $y$ of length $r + 1$
 
 for $k$ in $1, 2, \dots n$
-
-- we have stored $l_{m}$, $l_{m+1}$, ... $l_{k-1}$ and $y[m : k-1] where $m = \text{max}(k-r, 1)$
+- $m = \text{max}(k-r, 1)$
+- we have stored $l_{m}$, $l_{m+1}$, ... $l_{k-1}$ and $y[m : k-1]$
 - compute $l_k$ while changing values in $U$
-- dispose $l_m$ and add $l_k$ to matrix $l$
+- dispose $l_m$ (if $m >= 1$) and add $l_k$ to matrix $l$
 
-- $\tilde{b}[k] = L[k-r : k, k] x$ where $L[k-r : k, k]$ is implicitely constructed using $l_i$ vectors
-- $d$ = $U[k]$
+- $\tilde{b}[k] = L[m : k, k] x$ where $L[m : k, k]$ is implicitely constructed using $l_i$ vectors
+- $d$ = $U[1,1]$
 
-- dispose $y[m]$ and add $y[k] = \frac{\tilde{b}[k]}{d}$
+- dispose $y[m]$ (if $m >= 1$) and add $y[k] = \frac{\tilde{b}[k]}{d}$
 
 
 - if $k >= r+1$ compute $x[k - r] = L^T[k, k : k + r] y[k:k +r]$
